@@ -39,7 +39,12 @@ namespace PassVault.Services
 
         public void SaveChanges()
         {
-            throw new NotImplementedException();
+            List<string> lines = new List<string>();
+            foreach(Password password in Passwords)
+            {
+                lines.Add(password.ToCsv());
+            }
+            System.IO.File.WriteAllLines("./" + _fileName, lines.ToArray());
         }
     }
 }
