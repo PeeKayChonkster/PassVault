@@ -28,5 +28,15 @@ namespace PassVault.Models
 
             return sb.ToString();
         }
+
+        public string ToCsv()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(Id.ToString() + ',');
+            sb.Append(Pass.ToString() + ',');
+            sb.Append(Description.ToString() );
+
+            return sb.ToString();
+        }
     }
 }
