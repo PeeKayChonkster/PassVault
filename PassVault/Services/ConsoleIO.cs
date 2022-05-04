@@ -19,6 +19,11 @@ namespace PassVault.Services
             Console.Write(line);
         }
 
+        public void Write(char ch)
+        {
+            Console.Write(ch);
+        }
+
         public void WriteLine(string line)
         {
             Console.WriteLine(line);
