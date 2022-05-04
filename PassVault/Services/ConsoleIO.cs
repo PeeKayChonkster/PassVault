@@ -1,0 +1,27 @@
+﻿using PassVault.Interfaces;
+
+namespace PassVault.Services
+{
+    internal class ConsoleIO : IInputOutput
+    {
+        public void Clear()
+        {
+            Console.Clear();
+        }
+
+        public string? ReadLine()
+        {
+            return Console.ReadLine();
+        }
+
+        public void Write(string line)
+        {
+            Console.Write(line);
+        }
+
+        public void WriteLine(string line)
+        {
+            Console.WriteLine(line);
+        }
+    }
+}
