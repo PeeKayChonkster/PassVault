@@ -30,12 +30,21 @@ namespace PassVault.Services
 
         public void Add(Password password)
         {
-            throw new NotImplementedException();
+            if(!Passwords.Contains(password))
+            {
+                Passwords.Add(password);
+            }
         }
 
         public void Delete(string id)
         {
-            throw new NotImplementedException();
+            Password? password = (from pass in Passwords
+                                where pass.Id == id
+                                select pass).FirstOrDefault();
+            if(password != null)
+            {
+                Passwords.Remove(password);
+            }
         }
 
         public void SaveChanges()
