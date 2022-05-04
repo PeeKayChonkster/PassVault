@@ -3,8 +3,9 @@ using PassVault.Models;
 
 namespace PassVault.Services
 {
-    internal class Database : IDatabase
+    internal class Database : IDatabase, IDisposable
     {
+        private bool _disposed = false;
         private static readonly string _fileName = "vault_data.dat";
         public Database()
         {
@@ -45,6 +46,26 @@ namespace PassVault.Services
                 lines.Add(password.ToCsv());
             }
             System.IO.File.WriteAllLines("./" + _fileName, lines.ToArray());
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if(_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                SaveChanges();
+            }
+
+            _disposed = true;
         }
     }
 }
