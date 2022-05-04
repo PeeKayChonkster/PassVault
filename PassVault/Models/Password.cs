@@ -18,5 +18,15 @@ namespace PassVault.Models
             this.Pass = pass;
             this.Description = description;
         }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"Id : {Id}\n");
+            sb.Append($"Password : {Pass}\n");
+            sb.Append($"Description : {Description}\n");
+
+            return sb.ToString();
+        }
     }
 }
