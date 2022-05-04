@@ -1,0 +1,15 @@
+D:\Projects\C#\PassVault\PassVault\bin\Debug\net6.0\PassVault.exe
+D:\Projects\C#\PassVault\PassVault\bin\Debug\net6.0\PassVault.deps.json
+D:\Projects\C#\PassVault\PassVault\bin\Debug\net6.0\PassVault.runtimeconfig.json
+D:\Projects\C#\PassVault\PassVault\bin\Debug\net6.0\PassVault.dll
+D:\Projects\C#\PassVault\PassVault\bin\Debug\net6.0\PassVault.pdb
+D:\Projects\C#\PassVault\PassVault\obj\Debug\net6.0\PassVault.csproj.AssemblyReference.cache
+D:\Projects\C#\PassVault\PassVault\obj\Debug\net6.0\PassVault.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\C#\PassVault\PassVault\obj\Debug\net6.0\PassVault.AssemblyInfoInputs.cache
+D:\Projects\C#\PassVault\PassVault\obj\Debug\net6.0\PassVault.AssemblyInfo.cs
+D:\Projects\C#\PassVault\PassVault\obj\Debug\net6.0\PassVault.csproj.CoreCompileInputs.cache
+D:\Projects\C#\PassVault\PassVault\obj\Debug\net6.0\PassVault.dll
+D:\Projects\C#\PassVault\PassVault\obj\Debug\net6.0\refint\PassVault.dll
+D:\Projects\C#\PassVault\PassVault\obj\Debug\net6.0\PassVault.pdb
+D:\Projects\C#\PassVault\PassVault\obj\Debug\net6.0\PassVault.genruntimeconfig.cache
+D:\Projects\C#\PassVault\PassVault\obj\Debug\net6.0\ref\PassVault.dll
