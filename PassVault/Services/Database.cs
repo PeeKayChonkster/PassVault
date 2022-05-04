@@ -36,7 +36,7 @@ namespace PassVault.Services
             }
         }
 
-        public void Delete(string id)
+        public bool Delete(string id)
         {
             Password? password = (from pass in Passwords
                                 where pass.Id == id
@@ -44,7 +44,9 @@ namespace PassVault.Services
             if(password != null)
             {
                 Passwords.Remove(password);
+                return true;
             }
+            return false;
         }
 
         public void SaveChanges()

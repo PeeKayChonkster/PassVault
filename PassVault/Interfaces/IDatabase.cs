@@ -6,7 +6,7 @@ namespace PassVault.Interfaces
     {
         List<Password> Passwords { get; }
         void Add(Password password);
-        void Delete(string id);
+        bool Delete(string id);
         void SaveChanges();
     }
 }
