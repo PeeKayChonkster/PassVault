@@ -11,6 +11,7 @@ internal static class Program
         "add (short id) (password) [(desctiprion)] - add new password",
         "list - list all passwords",
         "remove (short id) - remove password form database",
+        "rereg - set new username and password",
         "exit - close program"
     };
     private static readonly string _configPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/passvault_config.dat";
@@ -69,7 +70,11 @@ internal static class Program
                 }
             case "add":
                 {
-                    if (args.Length < 2 || args[0] == "" || args[1] == "") return;
+                    if (args.Length < 2 || args[0] == "" || args[1] == "")
+                    {
+                        io.WriteLine("Wrong input. Enter \"help\" to list all commands");
+                        return;
+                    }
                     string desc = args.Length > 2? args[2] : "";
                     db.Add(new Password(args[0], args[1], desc));
                     io.WriteLine("Added Password " + args[0]);
@@ -77,8 +82,12 @@ internal static class Program
                 }
             case "remove":
                 {
-                    if (args.Length == 0 || args[0] == "") return;
-                    if(db.Delete(args[0]))
+                    if (args.Length == 0 || args[0] == "")
+                    {
+                        io.WriteLine("Wrong input. Enter \"help\" to list all commands");
+                        return;
+                    }
+                    if (db.Delete(args[0]))
                     {
                         io.WriteLine("Deleted password " + args[0]);
                     }
@@ -94,6 +103,17 @@ internal static class Program
                     {
                         io.WriteLine(password.ToString());
                     }
+                    break;
+                }
+            case "rereg":
+                {
+                    io.Write("Enter new username: ");
+                    string username = io.ReadLine();
+                    io.Write("Enter new password: ");
+                    string password = io.ReadLine();
+                    string[] lines = { Tools.EncodeString(username), Tools.EncodeString(password) };
+                    System.IO.File.WriteAllLines(_configPath, lines);
+                    io.WriteLine("Account was changed. Welcome, " + username);
                     break;
                 }
             case "exit":
