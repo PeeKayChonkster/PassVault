@@ -9,6 +9,16 @@ namespace PassVault.Services
             Console.Clear();
         }
 
+        public int Read()
+        {
+            return Console.Read();
+        }
+
+        public char ReadKey()
+        {
+            return Console.ReadKey().KeyChar;
+        }
+
         public string? ReadLine()
         {
             return Console.ReadLine();
