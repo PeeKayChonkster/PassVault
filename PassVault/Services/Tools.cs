@@ -8,13 +8,24 @@ namespace PassVault.Services
         private static readonly int key = 4;
         public static readonly string FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/PassVault/";
 
+        public static char EncodeChar(in char c)
+        {
+            int ic = (int)c;
+            return ic + key < 255 ? (char)(ic + key) : (char)(ic - key);
+        }
+
+        public static char DecodeChar(in char c)
+        {
+            int ic = (int)c;
+            return ic + 2 * key < 255 ? (char)(ic - key) : (char)(ic + key);
+        }
+
         public static string EncodeString(in string str)
         {
             StringBuilder sb = new StringBuilder();
             foreach(char c in str)
             {
-                int ic = (int)c;
-                sb.Append(ic + key < 255? (char)(ic + key) : (char)(ic - key));
+                sb.Append(EncodeChar(c));
             }
             return sb.ToString();
         }
@@ -23,8 +34,7 @@ namespace PassVault.Services
             StringBuilder sb = new StringBuilder();
             foreach (char c in str)
             {
-                int ic = (int)c;
-                sb.Append(ic + 2*key < 255 ? (char)(ic - key) : (char)(ic + key));
+                sb.Append(DecodeChar(c));
             }
             return sb.ToString();
         }
