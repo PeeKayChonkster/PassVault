@@ -7,6 +7,8 @@ namespace PassVault.Interfaces
         void Write(char ch);
         void WriteLine(string line);
         string? ReadLine();
+        int Read();
+        char ReadKey();
         void Clear();
     }
 }
