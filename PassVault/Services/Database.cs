@@ -6,7 +6,8 @@ namespace PassVault.Services
     internal class Database : IDatabase, IDisposable
     {
         private bool _disposed = false;
-        private static readonly string _filePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/PassVault/vault_data.dat";
+        private static readonly string _folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/PassVault/";
+        private static readonly string _filePath = _folderPath + "vault_data.dat";
         public Database()
         {
             Passwords = new List<Password>();
@@ -56,6 +57,7 @@ namespace PassVault.Services
             {
                 lines.Add(password.ToCsv());
             }
+            if(!System.IO.Directory.Exists(_folderPath)) System.IO.Directory.CreateDirectory(_folderPath);
             System.IO.File.WriteAllLines(_filePath, lines.ToArray());
         }
 

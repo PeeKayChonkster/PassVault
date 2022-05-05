@@ -13,9 +13,11 @@ internal static class Program
         "remove (short id) - remove password form database",
         "exit - close program"
     };
+    private static readonly string _configPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/passvault_config.dat";
 
     private static IInputOutput io = new ConsoleIO();
     private static bool _exiting = false;
+    private static bool _autentificated = false;
     private static readonly char _starter = '>';
     private static Database db = new Database();
 
@@ -26,13 +28,21 @@ internal static class Program
 
         while(!_exiting)
         {
-            io.Write(_starter);
-            string? cmd = io.ReadLine();
-            if(cmd != null)
+            if(!_autentificated)
             {
-                string[] words = cmd.Split(' ');
-                ExecCmd(words[0], words[1..^0]);
+                Autentificate();
             }
+            else
+            {
+                io.Write(_starter);
+                string? cmd = io.ReadLine();
+                if (cmd != null)
+                {
+                    string[] words = cmd.Split(' ');
+                    ExecCmd(words[0], words[1..^0]);
+                }
+            }
+
         }
 
         db.Dispose();
@@ -59,7 +69,7 @@ internal static class Program
                 }
             case "add":
                 {
-                    if (args.Length == 0 || args[0] == "" || args[1] == "") return;
+                    if (args.Length < 2 || args[0] == "" || args[1] == "") return;
                     string desc = args.Length > 2? args[2] : "";
                     db.Add(new Password(args[0], args[1], desc));
                     io.WriteLine("Added Password " + args[0]);
@@ -88,8 +98,7 @@ internal static class Program
                 }
             case "exit":
                 {
-                    _exiting = true;
-                    io.WriteLine("Goodbye!");
+                    Exit();
                     break;
                 }
             default:
@@ -98,5 +107,75 @@ internal static class Program
                     break;
                 }
         }
+    }
+
+    private static void Exit()
+    {
+        _exiting = true;
+        io.WriteLine("Goodbye!");
+    }
+
+    private static char ToLower(this char c)
+    {
+        return c.ToString().ToLower()[0];
+    }
+
+    private static void Autentificate()
+    {
+        if (System.IO.File.Exists(_configPath))
+        {
+            string[] lines = System.IO.File.ReadAllLines(_configPath);
+            if (lines.Length < 2)
+            {
+                io.WriteLine("Config file is damaged. Do you want to create new account? (y/n)");
+                io.Write(_starter);
+                char c = io.ReadKey().ToLower();
+                if(c.ToLower() == 'n')
+                {
+                    Exit();
+                }
+                else
+                {
+                    CreateAccount();
+                }
+            }
+            else
+            {
+                io.Write("Username: ");
+                string username = Tools.DecodeString(io.ReadLine());
+                io.Write("Password: ");
+                string password = Tools.DecodeString(io.ReadLine());
+                if(username == lines[0] && password == lines[1])
+                {
+                    io.WriteLine("Autentification was successful. Welcome, " + username);
+                    _autentificated = true;
+                }
+                else if(username != lines[0])
+                {
+                    io.WriteLine("Username is incorrect");
+                }
+                else
+                {
+                    io.WriteLine("Password is incorrent");
+                }
+            }
+        }
+        else
+        {
+            CreateAccount();
+        }
+    }
+
+    private static void CreateAccount()
+    {
+        io.WriteLine("Create new account");
+        io.Write("Username: ");
+        string username = io.ReadLine();
+        io.Write("Password: ");
+        string password = io.ReadLine();
+        string[] lines = { Tools.EncodeString(username), Tools.EncodeString(password) };
+        System.IO.File.WriteAllLines(_configPath, lines);
+        io.WriteLine("Account created. Welcome, " + username);
+        _autentificated = true;
     }
 }
