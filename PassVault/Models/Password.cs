@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using PassVault.Services;
 
 namespace PassVault.Models
 {
@@ -28,9 +29,20 @@ namespace PassVault.Models
         public string ToCsv()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(Id.ToString() + ',');
-            sb.Append(Pass.ToString() + ',');
-            sb.Append(Description.ToString() );
+            sb.Append(Id + ',');
+            sb.Append(Pass + ',');
+            sb.Append(Description);
+
+            return sb.ToString();
+        }
+
+        public string ToCsvEncoded()
+        {
+            StringBuilder sb = new StringBuilder();
+            Password encodedPass = Tools.EncodePassword(this);
+            sb.Append(encodedPass.Id + ',');
+            sb.Append(encodedPass.Pass + ',');
+            sb.Append(encodedPass.Description);
 
             return sb.ToString();
         }

@@ -17,7 +17,8 @@ internal static class Program
         "rereg - set new username and password",
         "exit - close program"
     };
-    private static readonly string _configPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/passvault_config.dat";
+
+    private static readonly string _configPath = Tools.FolderPath + "passvault_config.dat";
 
     private static IInputOutput io = new ConsoleIO();
     private static bool _exiting = false;
@@ -196,10 +197,10 @@ internal static class Program
             else
             {
                 io.Write("Username: ");
-                string username = Tools.DecodeString(io.ReadLine());
+                string username = io.ReadLine();
                 io.Write("Password: ");
-                string password = Tools.DecodeString(io.ReadLine());
-                if(username == lines[0] && password == lines[1])
+                string password = io.ReadLine();
+                if(username == Tools.DecodeString(lines[0]) && password == Tools.DecodeString(lines[1]))
                 {
                     io.WriteLine("Autentification was successful. Welcome, " + username);
                     _autentificated = true;
@@ -228,6 +229,7 @@ internal static class Program
         io.Write("Password: ");
         string password = io.ReadLine();
         string[] lines = { Tools.EncodeString(username), Tools.EncodeString(password) };
+        if (!System.IO.Directory.Exists(Tools.FolderPath)) System.IO.Directory.CreateDirectory(Tools.FolderPath);
         System.IO.File.WriteAllLines(_configPath, lines);
         io.WriteLine("Account created. Welcome, " + username);
         _autentificated = true;
