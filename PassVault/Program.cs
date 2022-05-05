@@ -75,7 +75,7 @@ internal static class Program
                         io.WriteLine("Wrong input. Enter \"help\" to list all commands");
                         return;
                     }
-                    string desc = args.Length > 2? args[2] : "";
+                    string desc = args.Length > 2? String.Join(" ", args[2..^0]) : "";
                     db.Add(new Password(args[0], args[1], desc));
                     io.WriteLine("Added Password " + args[0]);
                     break;
