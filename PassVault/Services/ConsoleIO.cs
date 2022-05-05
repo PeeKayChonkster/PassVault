@@ -14,9 +14,9 @@ namespace PassVault.Services
             return Console.Read();
         }
 
-        public char ReadKey()
+        public char ReadKey(bool echo = true)
         {
-            return Console.ReadKey().KeyChar;
+            return Console.ReadKey(!echo).KeyChar;
         }
 
         public string? ReadLine()
