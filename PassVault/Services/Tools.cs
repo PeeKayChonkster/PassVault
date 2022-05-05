@@ -5,18 +5,21 @@ namespace PassVault.Services
 {
     internal static class Tools
     {
-        private static readonly int key = 4;
+        private static readonly int key1 = 8; //even
+        private static readonly int key2 = 32; //even
         public static readonly string FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/PassVault/";
 
         public static char EncodeChar(in char c)
         {
             int ic = (int)c;
+            int key = ic % 2 == 0 ? key1 : key2;
             return ic + key < 255 ? (char)(ic + key) : (char)(ic - key);
         }
 
         public static char DecodeChar(in char c)
         {
             int ic = (int)c;
+            int key = ic % 2 == 0 ? key1 : key2;
             return ic + 2 * key < 255 ? (char)(ic - key) : (char)(ic + key);
         }
 
