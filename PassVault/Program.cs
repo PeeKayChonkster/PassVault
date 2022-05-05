@@ -12,6 +12,7 @@ internal static class Program
         "add (short id) (password) [(desctiprion)] - add new password",
         "list - list all passwords",
         "remove (short id) - remove password form database",
+        "removeall - remove all entries",
         "find (keyword) - search for passwords",
         "rereg - set new username and password",
         "exit - close program"
@@ -99,9 +100,21 @@ internal static class Program
                     }
                     break;
                 }
+            case "removeall":
+                {
+                    io.WriteLine("Delete all entries?(y/n)");
+                    char c = io.ReadKey(false);
+                    if(c.ToLower() == 'y')
+                    {
+                        db.Passwords.Clear();
+                        io.WriteLine("All entries were deleted");
+                    }
+                    break;
+                }
             case "list":
                 {
-                    foreach(Password password in db.Passwords)
+                    io.WriteLine("");
+                    foreach (Password password in db.Passwords)
                     {
                         io.WriteLine("-------------------");
                         io.WriteLine(password.ToString());
@@ -117,7 +130,7 @@ internal static class Program
                         io.WriteLine("Wrong input. Enter \"help\" to list all commands");
                         return;
                     }
-                    Regex reg = new Regex($"{args[0]}");
+                    Regex reg = new Regex($"{args[0]}", RegexOptions.IgnoreCase);
                     var passwords = from password in db.Passwords
                                            where reg.IsMatch(password.Id) || reg.IsMatch(password.Description)
                                            select password;
@@ -159,11 +172,6 @@ internal static class Program
     {
         _exiting = true;
         io.WriteLine("Goodbye!");
-    }
-
-    private static char ToLower(this char c)
-    {
-        return c.ToString().ToLower()[0];
     }
 
     private static void Autentificate()
