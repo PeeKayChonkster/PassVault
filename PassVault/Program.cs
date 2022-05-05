@@ -1,6 +1,7 @@
 ﻿using PassVault.Interfaces;
 using PassVault.Services;
 using PassVault.Models;
+using System.Text.RegularExpressions;
 
 internal static class Program
 {
@@ -11,6 +12,7 @@ internal static class Program
         "add (short id) (password) [(desctiprion)] - add new password",
         "list - list all passwords",
         "remove (short id) - remove password form database",
+        "find (keyword) - search for passwords",
         "rereg - set new username and password",
         "exit - close program"
     };
@@ -100,6 +102,27 @@ internal static class Program
             case "list":
                 {
                     foreach(Password password in db.Passwords)
+                    {
+                        io.WriteLine("-------------------");
+                        io.WriteLine(password.ToString());
+                        io.WriteLine("-------------------");
+                        io.WriteLine("");
+                    }
+                    break;
+                }
+            case "find":
+                {
+                    if (args.Length == 0 || args[0] == "")
+                    {
+                        io.WriteLine("Wrong input. Enter \"help\" to list all commands");
+                        return;
+                    }
+                    Regex reg = new Regex($"{args[0]}");
+                    var passwords = from password in db.Passwords
+                                           where reg.IsMatch(password.Id) || reg.IsMatch(password.Description)
+                                           select password;
+                    io.WriteLine("Search results:\n");
+                    foreach(var password in passwords)
                     {
                         io.WriteLine("-------------------");
                         io.WriteLine(password.ToString());
