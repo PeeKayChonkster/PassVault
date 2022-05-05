@@ -101,7 +101,10 @@ internal static class Program
                 {
                     foreach(Password password in db.Passwords)
                     {
+                        io.WriteLine("-------------------");
                         io.WriteLine(password.ToString());
+                        io.WriteLine("-------------------");
+                        io.WriteLine("");
                     }
                     break;
                 }

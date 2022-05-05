@@ -24,7 +24,7 @@ namespace PassVault.Models
             StringBuilder sb = new StringBuilder();
             sb.Append($"Id : {Id}\n");
             sb.Append($"Password : {Pass}\n");
-            sb.Append($"Description : {Description}\n");
+            sb.Append($"Description : {Description}");
 
             return sb.ToString();
         }
